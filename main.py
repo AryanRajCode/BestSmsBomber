@@ -1,8 +1,22 @@
 import os 
+def detect_os():
+    if os.name == 'nt':
+        print("Windows OS detected")
+    elif os.name == 'posix':
+        if 'Darwin' in os.uname():
+            print("Mac OS detected")
+        else:
+            print("Linux OS detected")
+    else:
+        print("Unknown OS detected")
+
+detect_os()
 try : 
     import requests
     from requests.structures import CaseInsensitiveDict
 except : 
+    os.system("pip install requests")
+    
     os.system("clear")
 import threading
 
