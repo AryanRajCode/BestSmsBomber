@@ -19,6 +19,6 @@ if %errorlevel% neq 0 (
 
 REM Run main.py
 echo Running main.py...
-clear
+
 cls
 python main.py
