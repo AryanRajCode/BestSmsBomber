@@ -293,7 +293,7 @@ def sms(number,amount) :
         resp15 = requests.post(url15, headers=headers15, data=data15)
         print("SMS Sent")
         resp16 = requests.post(url16, headers=headers16, data=data16)
-        print(str(j+1)+"Sms sent")
+        print("Sms sent")
 
     
 
