@@ -169,7 +169,6 @@ def nsms(number,amount) :
 
     for j in range(amount):
         sender= response = requests.post(f"{url}{j}", headers=headers, json=data)
-        print(sender)
         if sender =="<Response [400]>":
             print("SMS SENT")
         elif sender == "<Response [200]>" :
